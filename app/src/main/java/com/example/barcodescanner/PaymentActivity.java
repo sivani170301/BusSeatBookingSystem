@@ -1,7 +1,9 @@
 package com.example.barcodescanner;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -59,12 +61,29 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     @Override
     public void onPaymentSuccess(String s) {
         String busSeatNum = qrscanner.data;
-        tv2.setText("Payment Success\n Transaction Num: "+s);
+        //tv2.setText("Payment Success\n Transaction Num: "+s);
         dbref.child(busSeatNum).setValue("false");
-        MainActivity.tv.setText("Payment Success\n Transaction Num: "+s);
-        Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
+        //MainActivity.tv.setText("Payment Success\n Transaction Num: "+s);
+        AlertDialog.Builder builder = new AlertDialog.Builder(PaymentActivity.this);
+        builder.setTitle("Payment Success!");
+        builder.setMessage("Transaction Num:"+s+"\n\nSeat num "+busSeatNum.substring(3)+
+                " allotted to you successfully!");
+        builder.setCancelable(false);
+        builder.setNeutralButton("Okay",new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+       /* Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     @Override

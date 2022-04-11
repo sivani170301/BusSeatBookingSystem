@@ -1,9 +1,11 @@
 package com.example.barcodescanner;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -69,7 +71,7 @@ public class qrscanner extends AppCompatActivity implements ZXingScannerView.Res
                         onBackPressed();
                     }
                 });*/
-        dbref.addValueEventListener(new ValueEventListener() {
+        dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String str = dataSnapshot.child(data).getValue().toString();
@@ -82,10 +84,23 @@ public class qrscanner extends AppCompatActivity implements ZXingScannerView.Res
                 }
                 else if(str.equalsIgnoreCase("false")){
                     //Toast.makeText(qrscanner.this, "false", Toast.LENGTH_SHORT).show();
-                    MainActivity.tv.setText("Seat already booked");
-                    Intent intent = new Intent(qrscanner.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+                    //MainActivity.tv.setText("Seat already booked");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(qrscanner.this);
+                    builder.setTitle("Sorry!!");
+                    builder.setMessage("This Seat is already reserved.");
+                    builder.setCancelable(false);
+                    builder.setNeutralButton("Okay",new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            Intent intent = new Intent(qrscanner.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
 
             }
