@@ -89,7 +89,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     @Override
     public void onPaymentError(int i, String s) {
         tv2.setText("Payment Failed");
-        MainActivity.tv.setText("Payment Failed");
         Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

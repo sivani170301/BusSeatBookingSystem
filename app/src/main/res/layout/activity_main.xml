@@ -7,36 +7,40 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-    <Button
-        android:id="@+id/btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="scan"
-        android:textSize="20sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:padding="10dp"
-        android:layout_marginTop="40dp"/>
-
     <TextView
         android:id="@+id/tv"
+        android:textStyle="bold"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:text="demo"
         android:textSize="20sp"
-        android:layout_below="@+id/btn"
-         />
+        android:layout_alignParentTop="true"
+        />
+
     <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="logout"
+        android:text="scan"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:textSize="20sp"
         android:layout_below="@+id/tv"
         android:layout_centerHorizontal="true"
         android:padding="10dp"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="30dp"/>
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="logout"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textSize="20sp"
+        android:layout_below="@+id/btn"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"
+        android:layout_marginTop="30dp"/>
 </RelativeLayout>
