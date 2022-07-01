@@ -31,7 +31,9 @@ public class qrscanner extends AppCompatActivity implements ZXingScannerView.Res
 
     ZXingScannerView scannerView;
     DatabaseReference dbref;
-    public static String data;
+    public static String qrcodeValue;
+    // qrcodeValue is the seat number
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +63,8 @@ public class qrscanner extends AppCompatActivity implements ZXingScannerView.Res
 
     @Override
     public void handleResult(Result rawResult) {
-        data = rawResult.getText().toString();
-        Toast.makeText(qrscanner.this, data, Toast.LENGTH_SHORT).show();
+        qrcodeValue = rawResult.getText().toString();
+        Toast.makeText(qrscanner.this, qrcodeValue, Toast.LENGTH_SHORT).show();
         /*dbref.push().setValue(data)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -74,7 +76,7 @@ public class qrscanner extends AppCompatActivity implements ZXingScannerView.Res
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String str = dataSnapshot.child(data).getValue().toString();
+                String str = dataSnapshot.child(qrcodeValue).getValue().toString();
                 // str is either true or false
 
                 if(str.equalsIgnoreCase("true")){

@@ -18,29 +18,40 @@
         android:layout_alignParentTop="true"
         />
 
+    <ImageView
+        android:id="@+id/user_img"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignTop="@+id/tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/user" />
+
     <Button
+        android:background="@drawable/custom_button"
         android:id="@+id/btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="scan"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:text="scan qr"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:textSize="20sp"
-        android:layout_below="@+id/tv"
+        android:layout_below="@+id/user_img"
         android:layout_centerHorizontal="true"
-        android:padding="10dp"
+        android:padding="5dp"
         android:layout_marginTop="30dp"/>
 
     <Button
+        android:background="@drawable/custom_button"
         android:id="@+id/logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
         android:text="logout"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:textSize="20sp"
         android:layout_below="@+id/btn"
         android:layout_centerHorizontal="true"
-        android:padding="10dp"
+        android:padding="5dp"
         android:layout_marginTop="30dp"/>
 </RelativeLayout>

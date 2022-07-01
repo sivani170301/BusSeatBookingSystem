@@ -20,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private EditText email,name;
+    private EditText email,name,mob;
     private EditText password;
     private Button reg;
     @Override
@@ -34,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         reg = findViewById(R.id.register_btn);
         name = findViewById(R.id.name);
+        mob = findViewById(R.id.mob);
 
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String txt_email = email.getText().toString().trim();
                 String txt_password = password.getText().toString();
                 String txt_name = name.getText().toString().trim();
+                String txt_mob = mob.getText().toString().trim();
 
                 if(TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
                     Toast.makeText(RegisterActivity.this, "Empty Credentials", Toast.LENGTH_SHORT).show();
@@ -50,18 +52,18 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Password too short", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    registerUser(txt_name, txt_email, txt_password);
+                    registerUser(txt_name, txt_email, txt_password, txt_mob);
                 }
             }
         });
     }
 
-    private void registerUser(String name,String email, String password) {
+    private void registerUser(String name,String email, String password, String mob) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    User user = new User(name, email);
+                    User user = new User(name, email, mob);
                     FirebaseDatabase.getInstance().getReference("Users")
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                             .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -76,8 +78,16 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
                     //Toast.makeText(RegisterActivity.this, "Registration Success.", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RegisterActivity.this, StartActivity.class));
-                    finish();
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    if(mAuth.getCurrentUser() != null) {
+                        FirebaseAuth.getInstance().signOut();
+                        onBackPressed();
+                    }
+                    else {
+                        startActivity(new Intent(RegisterActivity.this, StartActivity.class));
+                        finish();
+                    }
+
                 }
                 else{
                     Toast.makeText(RegisterActivity.this, "Failed to register!", Toast.LENGTH_SHORT).show();

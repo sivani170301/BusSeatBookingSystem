@@ -2,11 +2,14 @@ package com.example.barcodescanner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.ImageViewCompat;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,21 +25,24 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btn;
-
+    private Button scanBtn;
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
     private Button logout;
+    private ImageView user_img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn = findViewById(R.id.btn);
+        user_img = findViewById(R.id.user_img);
+        ImageViewCompat.setImageTintList(user_img, ColorStateList.valueOf(0xFF018294));
+
+        scanBtn = findViewById(R.id.btn);
         logout = findViewById(R.id.logout);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),qrscanner.class));
@@ -53,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User userProfile = dataSnapshot.getValue(User.class);
                 if(userProfile!=null){
-                    String name = userProfile.name;
+                    String name = userProfile.getName();
                     tv.setText("Welcome, "+name+"!");
                 }
             }
